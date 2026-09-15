@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWG Labs | Desenvolvimento de Landing Pages de Alta Conversão</title>
+
+    <!-- Ícone da Aba do Navegador (Favicon) -->
+    <link rel="icon" type="image/jpeg" href="img/icon.jpe">
+
+    <!-- Importando fontes modernas -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Fira+Code:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS CSS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        /* Variáveis de Cores da SWG Labs */
+        :root {
+            --bg-escuro: #07070a;
+            --bg-card: #12121a;
+            --azul-indigo: #2c1b69;
+            --roxo: #6a0dad;
+            --roxo-claro: #9d4edd;
+            --branco: #ffffff;
+            --cinza: #a0a0b0;
+            --verde-sucesso: #10b981;
+
+            /* Efeito Neon Glow */
+            --glow-roxo: 0 0 20px rgba(157, 78, 221, 0.4);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-escuro);
+            color: var(--branco);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animação de Fundo Flutuante (Gradient animation) */
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Utilidades */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        /* Botões */
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--azul-indigo), var(--roxo));
+            color: var(--branco);
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid transparent;
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--roxo), var(--roxo-claro));
+            z-index: -1;
+            transition: opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(157, 78, 221, 0.6);
+            border-color: var(--roxo-claro);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn-mobile-only {
+            display: none;
+        }
+
+        /* Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: rgba(7, 7, 10, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: var(--roxo-claro);
+            font-family: 'Fira Code', monospace;
+            text-shadow: var(--glow-roxo);
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .desktop-nav a {
+            color: var(--cinza);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .desktop-nav a.nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--roxo-claro);
+            transition: width 0.3s ease;
+        }
+
+        .desktop-nav a.nav-link:hover {
+            color: var(--branco);
+        }
+
+        .desktop-nav a.nav-link:hover::after {
+            width: 100%;
+            box-shadow: var(--glow-roxo);
+        }
+
+        /* Hamburger Menu (Mobile) */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 3px;
+            background-color: var(--branco);
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 160px 5% 100px;
+            min-height: 100vh;
+            background: radial-gradient(circle at 80% 20%, rgba(44, 27, 105, 0.5) 0%, transparent 40%),
+                radial-gradient(circle at 20% 80%, rgba(106, 13, 173, 0.2) 0%, transparent 40%);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--verde-sucesso);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 25px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+            letter-spacing: 0.5px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #a0a0b0, #fff);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 5s ease infinite;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--cinza);
+            margin-bottom: 40px;
+        }
+
+        /* Terminal Decorativo */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .hero-visual {
+            width: 45%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .terminal {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 0 20px rgba(106, 13, 173, 0.2);
+            font-family: 'Fira Code', monospace;
+            font-size: 15px;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red {
+            background: #ff5f56;
+        }
+
+        .dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .dot.green {
+            background: #27c93f;
+            box-shadow: 0 0 10px #27c93f;
+        }
+
+        .term-text {
+            color: var(--cinza);
+            margin-bottom: 10px;
+        }
+
+        .term-prompt {
+            color: var(--roxo-claro);
+            text-shadow: var(--glow-roxo);
+        }
+
+        .term-success {
+            color: var(--verde-sucesso);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Diferenciais */
+        .features {
+            padding: 120px 5%;
+            background-color: #0b0b12;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            background-color: var(--bg-card);
+            padding: 50px 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--roxo-claro), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), var(--glow-roxo);
+            border-color: rgba(157, 78, 221, 0.3);
+        }
+
+        .feature-card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .feature-card h3 {
+            color: var(--roxo-claro);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: var(--cinza);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Quem Somos */
+        .about {
+            padding: 120px 5%;
+            background-color: var(--bg-escuro);
+        }
+
+        .about h2 {
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+        }
+
+        .about p {
+            color: var(--cinza);
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+        }
+
+        .about-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .stat h3 {
+            color: var(--roxo-claro);
+            font-size: 2.5rem;
+            line-height: 1;
+            margin-bottom: 8px;
+            text-shadow: var(--glow-roxo);
+        }
+
+        .stat span {
+            color: var(--cinza);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .code-window {
+            background-color: #0d0d14;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(106, 13, 173, 0.1);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: 0.5s;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .code-window:hover {
+            transform: perspective(1000px) rotateY(0deg) scale(1.02);
+            border-color: var(--roxo-claro);
+        }
+
+        .code-window pre {
+            color: #a0a0b0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            overflow-x: auto;
+            max-width: 100%;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-window code {
+            color: #82aaff;
+        }
+
+        .code-window .string {
+            color: #c3e88d;
+        }
+
+        .code-window .keyword {
+            color: #c792ea;
+        }
+
+        .code-window .func {
+            color: #82aaff;
+        }
+
+        /* Como Funciona */
+        .steps {
+            padding: 120px 5%;
+            background-color: #0b0b12;
+            background-image: radial-gradient(circle at 50% 50%, rgba(106, 13, 173, 0.05) 0%, transparent 70%);
+        }
+
+        .steps-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .steps-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .steps-header p {
+            color: var(--cinza);
+            font-size: 1.2rem;
+        }
+
+        .step-card {
+            background-color: var(--bg-card);
+            padding: 50px 30px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            transition: 0.4s;
+            z-index: 1;
+        }
+
+        .step-card:hover {
+            border-color: var(--azul-indigo);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .step-num {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--azul-indigo), var(--roxo));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0 auto 25px;
+            box-shadow: 0 10px 20px rgba(106, 13, 173, 0.5);
+            border: 2px solid var(--roxo-claro);
+        }
+
+        .step-card h3 {
+            margin-bottom: 15px;
+            color: var(--branco);
+            font-size: 1.5rem;
+        }
+
+        .step-card p {
+            color: var(--cinza);
+            font-size: 1.05rem;
+        }
+
+        /* Pricing */
+        .pricing {
+            padding: 120px 5%;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .pricing-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .pricing-header p {
+            color: var(--cinza);
+            font-size: 1.2rem;
+        }
+
+        .price-card {
+            background-color: var(--bg-card);
+            padding: 50px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: 0.4s;
+        }
+
+        .price-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .price-card.destaque {
+            border-color: var(--roxo-claro);
+            box-shadow: 0 0 40px rgba(106, 13, 173, 0.3);
+            background: linear-gradient(180deg, rgba(18, 18, 26, 1) 0%, rgba(44, 27, 105, 0.2) 100%);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+
+        .price-card.destaque:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 50px rgba(157, 78, 221, 0.5);
+        }
+
+        .price-card.destaque::before {
+            content: 'Mais Vendido';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--roxo-claro), var(--roxo));
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        .price-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--roxo-claro));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            color: var(--cinza);
+            font-weight: 400;
+            -webkit-text-fill-color: var(--cinza);
+        }
+
+        .desc {
+            color: var(--cinza);
+            margin-bottom: 30px;
+            font-size: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+
+        .price-card ul li {
+            margin-bottom: 15px;
+            color: #eee;
+            display: flex;
+            gap: 12px;
+            font-size: 1.05rem;
+        }
+
+        .price-card ul li::before {
+            content: "✓";
+            color: var(--verde-sucesso);
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+        }
+
+        .price-card .btn {
+            text-align: center;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 120px 5%;
+            background-color: #0b0b12;
+            position: relative;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .faq-header h2 {
+            font-size: 2.8rem;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+        }
+
+        .faq-item details {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .faq-item details:hover {
+            border-color: rgba(157, 78, 221, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .faq-item summary {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--branco);
+            outline: none;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-item summary::after {
+            content: "+";
+            color: var(--roxo-claro);
+            font-size: 2rem;
+            line-height: 1;
+            font-weight: 300;
+            transition: 0.3s;
+        }
+
+        .faq-item details[open] summary::after {
+            content: "−";
+            transform: rotate(180deg);
+        }
+
+        .faq-item p {
+            margin-top: 20px;
+            color: var(--cinza);
+            line-height: 1.7;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+            font-size: 1.05rem;
+        }
+
+        /* Formulário de Contato */
+        .contact {
+            padding: 120px 5%;
+            background-color: var(--bg-escuro);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            padding: 60px;
+            border-radius: 20px;
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), var(--glow-roxo);
+            position: relative;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .contact-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+        }
+
+        .contact-header p {
+            color: var(--cinza);
+            font-size: 1.15rem;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #ddd;
+            font-size: 1.05rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 18px;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--branco);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--roxo-claro);
+            box-shadow: 0 0 0 3px rgba(157, 78, 221, 0.2);
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a0a0b0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px top 50%;
+            background-size: 12px auto;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 25px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .btn-submit {
+            width: 100%;
+            font-size: 1.2rem;
+            padding: 18px;
+            margin-top: 15px;
+            border-radius: 12px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050508;
+            padding: 80px 5% 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            color: var(--cinza);
+            margin-top: 20px;
+            max-width: 80%;
+            font-size: 1.05rem;
+        }
+
+        .footer-links,
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            color: var(--branco);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links a {
+            color: var(--cinza);
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 1.05rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--roxo-claro);
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            color: var(--cinza);
+            font-size: 1.05rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 30px;
+            color: var(--cinza);
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVIDADE (Mobile & Tablets) */
+        @media (max-width: 900px) {
+
+            /* Header & Nav Nav */
+            .logo {
+                font-size: 20px;
+            }
+
+            .btn-desktop-only {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .desktop-nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: rgba(7, 7, 10, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                padding: 40px 5%;
+                gap: 25px;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+
+                /* Efeito de abertura/fechamento suave */
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease-in-out;
+            }
+
+            .desktop-nav.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+
+            .desktop-nav a.nav-link {
+                font-size: 1.2rem;
+            }
+
+            .btn-mobile-only {
+                display: inline-block;
+                width: 100%;
+                text-align: center;
+                margin-top: 15px;
+                font-size: 1.1rem;
+            }
+
+            /* Animação do X no Hamburger */
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            /* Estrutura Geral */
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 140px;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-text,
+            .hero-visual {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .hero-visual {
+                margin-top: 60px;
+            }
+
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .about {
+                text-align: center;
+                padding: 80px 5%;
+                overflow: hidden;
+            }
+
+            .about h2 {
+                font-size: 2.2rem;
+            }
+
+            .about-container {
+                width: 100%;
+                max-width: 100vw;
+                overflow: hidden;
+            }
+
+            /* Ajuste crítico da estatística no celular para não cortar a tela */
+            .about-stats {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+                width: 100%;
+            }
+
+            .about-stats .stat:last-child {
+                grid-column: auto;
+            }
+
+            .price-card.destaque {
+                transform: scale(1);
+            }
+
+            .price-card.destaque:hover {
+                transform: scale(1.02);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 40px;
+            }
+
+            .footer-brand p {
+                max-width: 100%;
+                margin: 15px auto 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .contact-container {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Cabeçalho -->
+    <header data-aos="fade-down" data-aos-duration="1000">
+        <div class="logo">
+            <span>&lt;/&gt;</span> SWG Labs
+        </div>
+
+        <!-- Ícone Hamburger (Só aparece no mobile) -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <!-- Navegação Principal -->
+        <nav class="desktop-nav" id="nav-menu">
+            <a href="#diferenciais" class="nav-link">Diferenciais</a>
+            <a href="#sobre" class="nav-link">Quem Somos</a>
+            <a href="#passo-a-passo" class="nav-link">Como Funciona</a>
+            <a href="#planos" class="nav-link">Planos</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+            <!-- Botão que aparece apenas DENTRO do menu no mobile -->
+            <a href="#orcamento" class="btn btn-mobile-only">Solicitar Orçamento</a>
+        </nav>
+
+        <!-- Botão visível no cabeçalho apenas no Desktop -->
+        <a href="#orcamento" class="btn btn-desktop-only">Solicitar Orçamento</a>
+    </header>
+
+    <!-- Seção Principal -->
+    <section class="hero">
+        <div class="hero-text" data-aos="fade-right" data-aos-duration="1200">
+            <div class="badge" data-aos="zoom-in" data-aos-delay="300">● Projetos entregues em 5h-12h</div>
+            <h1>Landing pages profissionais, no ar em poucas horas.</h1>
+            <p>Atendemos pequenos negócios e prestadores de serviços de <strong>Canaã dos Carajás, Parauapebas e
+                    região</strong>. Transforme visitantes em clientes com um site premium, rápido e focado em conversão
+                extrema.</p>
+            <a href="#planos" class="btn">Ver Catálogo de Preços</a>
+        </div>
+
+        <div class="hero-visual" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <p class="term-text"><span class="term-prompt">$</span> swg deploy landing-page --client</p>
+                <p class="term-text">> inicializando ambiente de alta performance...</p>
+                <p class="term-text">> otimizando SEO e scripts ... concluído</p>
+                <p class="term-text">> tempo de entrega: estimativa 5h a 12h</p>
+                <p class="term-success">✓ status: online e vendendo 24/7</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diferenciais -->
+    <section class="features" id="diferenciais">
+        <h2 data-aos="fade-up">Por que escolher a SWG Labs?</h2>
+        <div class="grid-3">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <h3>Agilidade Extrema</h3>
+                <p>Nossa equipe domina o código. Esqueça meses de espera; entregamos seu projeto estruturado e no ar em
+                    uma janela de 5 a 12 horas úteis.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <h3>Tecnologia Própria</h3>
+                <p>Não usamos construtores lentos como WordPress ou Wix. Desenvolvemos com código limpo e infraestrutura
+                    própria, garantindo velocidade máxima.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <h3>Foco Regional</h3>
+                <p>Conhecemos o mercado de Canaã dos Carajás e Parauapebas. Criamos páginas focadas em fazer o seu
+                    cliente local clicar no seu WhatsApp.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quem Somos -->
+    <section class="about" id="sobre">
+        <div class="about-container grid-2">
+            <div class="about-text" data-aos="fade-right">
+                <h2>Quem está por trás do código?</h2>
+                <p>A <strong>SWG Labs</strong> nasceu da união de três especialistas em desenvolvimento de sistemas:
+                    <strong>Samuel, Weslem e Gutierrez</strong>. Nossa missão é simples: trazer tecnologia de ponta para
+                    os pequenos negócios locais, sem preços abusivos.
+                </p>
+                <p>Nós somos uma <em>software house</em> de verdade. Escrevemos linha por linha do seu site. É por isso
+                    que nossas Landing Pages (como esta que você está lendo) carregam de forma espetacular no celular do
+                    seu cliente, convertendo mais vendas.</p>
+
+                <!-- Status arrumados para o mobile -->
+                <div class="about-stats">
+                    <div class="stat" data-aos="zoom-in" data-aos-delay="100">
+                        <h3>168h</h3>
+                        <span>Capacidade Mensal</span>
+                    </div>
+                    <div class="stat" data-aos="zoom-in" data-aos-delay="300">
+                        <h3>100%</h3>
+                        <span>Código Próprio</span>
+                    </div>
+                    <div class="stat" data-aos="zoom-in" data-aos-delay="500">
+                        <h3>0</h3>
+                        <span>Construtores Lentos</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-visual" data-aos="flip-left" data-aos-duration="1000">
+                <div class="code-window">
+                    <div class="terminal-header">
+                        <div class="dot red"></div>
+                        <div class="dot yellow"></div>
+                        <div class="dot green"></div>
+                    </div>
+                    <pre><code><span class="keyword">const</span> equipe = [<span class="string">"Samuel"</span>, <span class="string">"Weslem"</span>, <span class="string">"Gutierrez"</span>];
+<span class="keyword">const</span> foco = <span class="string">"Alta Conversão"</span>;
+<span class="keyword">const</span> local = [<span class="string">"Canaã dos Carajás"</span>, <span class="string">"Parauapebas"</span>];
+
+<span class="keyword">function</span> <span class="func">iniciarProjeto</span>(cliente) {
+    <span class="keyword">if</span>(cliente.precisaVenderMais) {
+        <span class="keyword">return</span> <span class="string">"Landing Page Otimizada Premium"</span>;
+    }
+}
+                    </code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona -->
+    <section class="steps" id="passo-a-passo">
+        <div class="steps-header" data-aos="fade-up">
+            <h2>Como Funciona?</h2>
+            <p>Do seu primeiro contato até o site no ar em tempo recorde.</p>
+        </div>
+        <div class="grid-3">
+            <div class="step-card" data-aos="zoom-in-up" data-aos-delay="100">
+                <div class="step-num">1</div>
+                <h3>O Briefing</h3>
+                <p>Você nos envia sua ideia pelo formulário do site ou no WhatsApp. Nós entendemos seu modelo de
+                    negócio, público-alvo, cores e o principal objetivo.</p>
+            </div>
+            <div class="step-card" data-aos="zoom-in-up" data-aos-delay="300">
+                <div class="step-num">2</div>
+                <h3>Mão no Código</h3>
+                <p>Nossa equipe vai para o teclado. Sem enrolação. Focamos totalmente no seu projeto para estruturar e
+                    programar tudo na nossa janela de 5h a 12h.</p>
+            </div>
+            <div class="step-card" data-aos="zoom-in-up" data-aos-delay="500">
+                <div class="step-num">3</div>
+                <h3>No Ar!</h3>
+                <p>Te enviamos o link pronto. Nós configuramos o domínio e o servidor, e a sua página já fica disponível
+                    24h por dia na internet, pronta para vender.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preços -->
+    <section class="pricing" id="planos">
+        <div class="pricing-header" data-aos="fade-up">
+            <h2>Nossos Pacotes</h2>
+            <p>Valores transparentes e justos. Escolha o plano ideal para a sua necessidade atual.</p>
+        </div>
+        <div class="grid-3">
+            <!-- Plano 1 -->
+            <div class="price-card" data-aos="fade-up" data-aos-delay="100">
+                <h3>LP Estática</h3>
+                <div class="price">R$ 90<span>,00*</span></div>
+                <p class="desc">Página única, direta ao ponto, como um cartão de visitas digital de alto impacto.</p>
+                <ul>
+                    <li>Estrutura de 1 página</li>
+                    <li>Design Responsivo (Mobile)</li>
+                    <li>Botão direto pro WhatsApp</li>
+                    <li>Entrega em ~5 horas</li>
+                </ul>
+                <a href="#orcamento" onclick="document.getElementById('plano').value='LP Estática (R$ 90,00)'"
+                    class="btn">Quero esta</a>
+            </div>
+
+            <!-- Plano 2 -->
+            <div class="price-card destaque" data-aos="zoom-in" data-aos-delay="300" data-aos-duration="800">
+                <h3>LP Animada</h3>
+                <div class="price">R$ 150<span>,00*</span></div>
+                <p class="desc">Com animações imersivas (iguais a esta página) que prendem a atenção do visitante.</p>
+                <ul>
+                    <li>Tudo da Estática</li>
+                    <li>Animações de rolagem (AOS)</li>
+                    <li>Efeitos de hover modernos</li>
+                    <li>Maior retenção visual</li>
+                    <li>Entrega em ~8 horas</li>
+                </ul>
+                <a href="#orcamento" onclick="document.getElementById('plano').value='LP Animada (R$ 150,00)'"
+                    class="btn">Quero esta</a>
+            </div>
+
+            <!-- Plano 3 -->
+            <div class="price-card" data-aos="fade-up" data-aos-delay="500">
+                <h3>LP + Automação</h3>
+                <div class="price">R$ 220<span>,00*</span></div>
+                <p class="desc">Foco máximo em captação com fluxos, formulários e integração profunda.</p>
+                <ul>
+                    <li>Tudo da Animada</li>
+                    <li>Formulários integrados</li>
+                    <li>Gatilhos de automação (leads)</li>
+                    <li>Integração de e-mail</li>
+                    <li>Entrega em ~12 horas</li>
+                </ul>
+                <a href="#orcamento" onclick="document.getElementById('plano').value='LP + Automação (R$ 220,00)'"
+                    class="btn">Quero esta</a>
+            </div>
+        </div>
+        <p style="text-align: center; color: var(--cinza); margin-top: 40px; font-size: 0.95rem;" data-aos="fade-in">
+            * Valores base mínimos, sujeitos à alteração conforme a complexidade extra do projeto solicitado.
+        </p>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="faq-container">
+            <div class="faq-header" data-aos="fade-up">
+                <h2>Perguntas Frequentes</h2>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="100">
+                <details>
+                    <summary>Vocês cobram mensalidade?</summary>
+                    <p>O desenvolvimento da página é cobrado apenas uma única vez. Para manter o site no ar
+                        (servidor/domínio), o custo do primeiro mês já é nosso. Depois, podemos fechar um pacote de
+                        manutenção mensal super acessível com você. Você decide!</p>
+                </details>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
+                <details>
+                    <summary>Eu preciso já ter um domínio (www)?</summary>
+                    <p>Não precisa se preocupar com a parte técnica! Nós da SWG Labs te orientamos a comprar e registrar
+                        o nome da sua empresa na internet de forma segura. Toda a configuração pesada fica por nossa
+                        conta.</p>
+                </details>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="300">
+                <details>
+                    <summary>Como conseguem entregar o site tão rápido?</summary>
+                    <p>Porque somos programadores raiz. Diferente de agências que usam plataformas pesadas de
+                        arrastar-e-soltar, nós escrevemos o código do seu site. Isso nos dá total controle da
+                        arquitetura, acelerando absurdamente a entrega.</p>
+                </details>
+            </div>
+            <div class="faq-item" data-aos="fade-up" data-aos-delay="400">
+                <details>
+                    <summary>Atendem apenas Canaã dos Carajás?</summary>
+                    <p>Nosso foco principal é o comércio local de Canaã dos Carajás e Parauapebas, pois conhecemos bem a
+                        dinâmica de consumo da região. No entanto, o digital não tem fronteiras! Atendemos o Brasil
+                        todo.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formulário de Contato -->
+    <section class="contact" id="orcamento">
+        <div class="contact-container" data-aos="zoom-in-up" data-aos-duration="1000">
+            <div class="contact-header">
+                <h2>Inicie seu Projeto</h2>
+                <p>Preencha os dados abaixo. Você será redirecionado ao nosso WhatsApp e também receberemos uma cópia da
+                    proposta por e-mail.</p>
+            </div>
+
+            <form id="project-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" class="form-control" required placeholder="Seu nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">WhatsApp</label>
+                        <input type="tel" id="telefone" class="form-control" required placeholder="(94) 90000-0000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" class="form-control" required placeholder="seu@email.com">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="plano">Plano de Interesse</label>
+                        <select id="plano" class="form-control" required>
+                            <option value="" disabled selected>Selecione um plano...</option>
+                            <option value="LP Estática (R$ 90,00)">LP Estática (R$ 90,00)</option>
+                            <option value="LP Animada (R$ 150,00)">LP Animada (R$ 150,00)</option>
+                            <option value="LP + Automação (R$ 220,00)">LP + Automação (R$ 220,00)</option>
+                            <option value="Projeto Personalizado">Outro / Projeto Personalizado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="prazo">Data Limite de Entrega</label>
+                        <input type="date" id="prazo" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="ideia">Descreva sua Ideia / Negócio</label>
+                    <textarea id="ideia" class="form-control" required
+                        placeholder="Fale um pouco sobre o seu projeto, qual é o seu negócio e o que você espera da landing page..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-submit" id="submit-btn">Enviar Proposta e Falar no
+                    WhatsApp</button>
+                <div id="form-status"
+                    style="margin-top: 15px; text-align: center; font-size: 0.95rem; font-weight: 600;"></div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand" data-aos="fade-right">
+                <div class="logo">
+                    <span>&lt;/&gt;</span> SWG Labs
+                </div>
+                <p>Agência de desenvolvimento web ágil focada em criar landing pages rápidas e de alta conversão para o
+                    comércio local.</p>
+            </div>
+
+            <div class="footer-links" data-aos="fade-up" data-aos-delay="200">
+                <h3>Navegação Rápida</h3>
+                <a href="#diferenciais">Diferenciais</a>
+                <a href="#sobre">Quem Somos</a>
+                <a href="#passo-a-passo">Como Funciona</a>
+                <a href="#planos">Tabela de Preços</a>
+                <a href="#faq">Perguntas Frequentes (FAQ)</a>
+            </div>
+
+            <div class="footer-contact" data-aos="fade-up" data-aos-delay="400">
+                <h3>Fale Conosco</h3>
+                <p><strong>WhatsApp:</strong> (94) 98136-8560</p>
+                <p><strong>Site Oficial:</strong> swg.techtriad.com</p>
+                <p><strong>Atendimento:</strong> Canaã dos Carajás & Parauapebas - PA</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom" data-aos="fade-in" data-aos-delay="600">
+            <p>© 2026 SWG Labs. Todos os direitos reservados. Desenvolvido com código próprio e muita agilidade.</p>
+        </div>
+    </footer>
+
+    <!-- JS de Animações (AOS) -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializa as animações de rolagem
+        AOS.init({
+            duration: 900,
+            once: true,
+            offset: 50
+        });
+
+        // Lógica do Menu Hamburger (Mobile)
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // Fecha o menu ao clicar em um link
+        document.querySelectorAll('.desktop-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            });
+        });
+
+        // Máscara para o telefone (WhatsApp)
+        document.getElementById('telefone').addEventListener('input', function (e) {
+            let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        });
+
+        // Submissão do Formulário
+        document.getElementById('project-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const btn = document.getElementById('submit-btn');
+            const statusDiv = document.getElementById('form-status');
+
+            btn.innerText = 'Processando...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+
+            const nome = document.getElementById('nome').value;
+            const telefone = document.getElementById('telefone').value;
+            const email = document.getElementById('email').value;
+            const plano = document.getElementById('plano').value;
+            const prazo = document.getElementById('prazo').value;
+            const ideia = document.getElementById('ideia').value;
+
+            // Formatação da data para o formato BR
+            const dataObj = new Date(prazo + "T00:00:00");
+            const prazoFormatado = dataObj.toLocaleDateString('pt-BR');
+
+            // 1. Enviar e-mail para a SWG Labs via FormSubmit
+            fetch("https://formsubmit.co/ajax/samuel.estudos8@gmail.com", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: `Nova Proposta SWG Labs: ${nome}`,
+                    _template: "table",
+                    Nome: nome,
+                    WhatsApp: telefone,
+                    Email: email,
+                    Plano_Escolhido: plano,
+                    Prazo_Desejado: prazoFormatado,
+                    Descricao_da_Ideia: ideia
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    statusDiv.innerHTML = '<span style="color: var(--verde-sucesso);">Tudo certo! Redirecionando para o WhatsApp...</span>';
+
+                    // 2. Montar texto formatado e redirecionar para o WhatsApp da SWG Labs
+                    const numeroSWG = "5594981368560";
+                    const textoWhatsapp = `Olá, SWG Labs!\n\nMeu nome é *${nome}* e acabei de enviar uma proposta de projeto pelo site.\n\n*Detalhes:*\n- *Plano:* ${plano}\n- *Prazo Desejado:* ${prazoFormatado}\n- *E-mail:* ${email}\n\n*Minha Ideia/Negócio:*\n${ideia}\n\nPodemos conversar para alinhar os detalhes?`;
+
+                    const urlWhatsapp = `https://wa.me/${numeroSWG}?text=${encodeURIComponent(textoWhatsapp)}`;
+
+                    // Aguarda um instante para o usuário ler a mensagem de sucesso e abre o Whats
+                    setTimeout(() => {
+                        window.open(urlWhatsapp, '_blank');
+
+                        // Reseta o formulário
+                        document.getElementById('project-form').reset();
+                        btn.innerText = 'Enviar Proposta e Falar no WhatsApp';
+                        btn.style.opacity = '1';
+                        btn.disabled = false;
+                        setTimeout(() => statusDiv.innerHTML = '', 4000);
+                    }, 1500);
+                })
+                .catch(error => {
+                    console.error("Erro no envio do formulário:", error);
+                    statusDiv.innerHTML = '<span style="color: #ff5f56;">Ops, houve um erro no envio do e-mail. Tente enviar a mensagem diretamente pelo WhatsApp.</span>';
+                    btn.innerText = 'Enviar Proposta e Falar no WhatsApp';
+                    btn.style.opacity = '1';
+                    btn.disabled = false;
+                });
+        });
+    </script>
+</body>
+
+</html>
