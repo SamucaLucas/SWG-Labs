@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWG Labs | Desenvolvimento de Landing Pages de Alta Conversão</title>
+    <title>SWG TechTriad | Desenvolvimento de Landing Pages de Alta Conversão</title>
 
     <!-- Ícone da Aba do Navegador (Favicon) -->
     <link rel="icon" type="image/jpeg" href="img/icon.jpe">
@@ -18,7 +18,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* Variáveis de Cores da SWG Labs */
+        /* Variáveis de Cores da SWG TechTriad */
         :root {
             --bg-escuro: #07070a;
             --bg-card: #12121a;
@@ -1062,7 +1062,7 @@
     <!-- Cabeçalho -->
     <header data-aos="fade-down" data-aos-duration="1000">
         <div class="logo">
-            <span>&lt;/&gt;</span> SWG Labs
+            <span>&lt;/&gt;</span> SWG TechTriad
         </div>
 
         <!-- Ícone Hamburger (Só aparece no mobile) -->
@@ -1116,7 +1116,7 @@
 
     <!-- Diferenciais -->
     <section class="features" id="diferenciais">
-        <h2 data-aos="fade-up">Por que escolher a SWG Labs?</h2>
+        <h2 data-aos="fade-up">Por que escolher a SWG TechTriad?</h2>
         <div class="grid-3">
             <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
                 <h3>Agilidade Extrema</h3>
@@ -1141,7 +1141,7 @@
         <div class="about-container grid-2">
             <div class="about-text" data-aos="fade-right">
                 <h2>Quem está por trás do código?</h2>
-                <p>A <strong>SWG Labs</strong> nasceu da união de três especialistas em desenvolvimento de sistemas:
+                <p>A <strong>SWG TechTriad</strong> nasceu da união de três especialistas em desenvolvimento de sistemas:
                     <strong>Samuel, Weslem e Gutierrez</strong>. Nossa missão é simples: trazer tecnologia de ponta para
                     os pequenos negócios locais, sem preços abusivos.
                 </p>
@@ -1291,7 +1291,7 @@
             <div class="faq-item" data-aos="fade-up" data-aos-delay="200">
                 <details>
                     <summary>Eu preciso já ter um domínio (www)?</summary>
-                    <p>Não precisa se preocupar com a parte técnica! Nós da SWG Labs te orientamos a comprar e registrar
+                    <p>Não precisa se preocupar com a parte técnica! Nós da SWG TechTriad te orientamos a comprar e registrar
                         o nome da sua empresa na internet de forma segura. Toda a configuração pesada fica por nossa
                         conta.</p>
                 </details>
@@ -1377,7 +1377,7 @@
         <div class="footer-grid">
             <div class="footer-brand" data-aos="fade-right">
                 <div class="logo">
-                    <span>&lt;/&gt;</span> SWG Labs
+                    <span>&lt;/&gt;</span> SWG TechTriad
                 </div>
                 <p>Agência de desenvolvimento web ágil focada em criar landing pages rápidas e de alta conversão para o
                     comércio local.</p>
@@ -1401,7 +1401,7 @@
         </div>
 
         <div class="footer-bottom" data-aos="fade-in" data-aos-delay="600">
-            <p>© 2026 SWG Labs. Todos os direitos reservados. Desenvolvido com código próprio e muita agilidade.</p>
+            <p>© 2026 SWG TechTriad. Todos os direitos reservados. Desenvolvido com código próprio e muita agilidade.</p>
         </div>
     </footer>
 
@@ -1460,7 +1460,7 @@
             const dataObj = new Date(prazo + "T00:00:00");
             const prazoFormatado = dataObj.toLocaleDateString('pt-BR');
 
-            // 1. Enviar e-mail para a SWG Labs via FormSubmit
+            // 1. Enviar e-mail para a SWG TechTriad via FormSubmit
             fetch("https://formsubmit.co/ajax/samuel.estudos8@gmail.com", {
                 method: "POST",
                 headers: {
@@ -1468,7 +1468,7 @@
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
-                    _subject: `Nova Proposta SWG Labs: ${nome}`,
+                    _subject: `Nova Proposta SWG TechTriad: ${nome}`,
                     _template: "table",
                     Nome: nome,
                     WhatsApp: telefone,
@@ -1482,9 +1482,9 @@
                 .then(data => {
                     statusDiv.innerHTML = '<span style="color: var(--verde-sucesso);">Tudo certo! Redirecionando para o WhatsApp...</span>';
 
-                    // 2. Montar texto formatado e redirecionar para o WhatsApp da SWG Labs
+                    // 2. Montar texto formatado e redirecionar para o WhatsApp da SWG TechTriad
                     const numeroSWG = "5594981368560";
-                    const textoWhatsapp = `Olá, SWG Labs!\n\nMeu nome é *${nome}* e acabei de enviar uma proposta de projeto pelo site.\n\n*Detalhes:*\n- *Plano:* ${plano}\n- *Prazo Desejado:* ${prazoFormatado}\n- *E-mail:* ${email}\n\n*Minha Ideia/Negócio:*\n${ideia}\n\nPodemos conversar para alinhar os detalhes?`;
+                    const textoWhatsapp = `Olá, SWG TechTriad!\n\nMeu nome é *${nome}* e acabei de enviar uma proposta de projeto pelo site.\n\n*Detalhes:*\n- *Plano:* ${plano}\n- *Prazo Desejado:* ${prazoFormatado}\n- *E-mail:* ${email}\n\n*Minha Ideia/Negócio:*\n${ideia}\n\nPodemos conversar para alinhar os detalhes?`;
 
                     const urlWhatsapp = `https://wa.me/${numeroSWG}?text=${encodeURIComponent(textoWhatsapp)}`;
 
